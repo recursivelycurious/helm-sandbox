@@ -1,3 +1,5 @@
 favorite:
+  # if no drink is specified, the configmap will generate a release name specific tea
   drink:
-  food: salmon
+  # if no food is specified, the template should fail to render.
+  food: 
