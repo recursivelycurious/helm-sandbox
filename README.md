@@ -1,8 +1,8 @@
 #### doc by haiku
 
-man the template helm
-resources emerge from mu
-mostly sans haiku
+man the template helm  
+resources emerge from mu  
+mostly sans haiku  
 
 ##### but seriously
 
