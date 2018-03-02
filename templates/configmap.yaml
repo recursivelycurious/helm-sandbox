@@ -8,11 +8,12 @@ data:
   {{- if eq .Values.favorite.food "pizza" }}
   toppings: |-
     {{- range .Values.pizzaToppings }}
-    - {{ . | quote }}
+    - {{ . | title | quote }}
     {{- end }}
   {{- end }}
   {{- if .Values.favorite.drink }}
-  drink: {{ .Values.favorite.drink | default (printf "%s-tea" (include "helm-sandbox.fullname" .)) | quote }}
+  drink: 
+    type: {{ .Values.favorite.drink | default (printf "%s-tea" (include "helm-sandbox.fullname" .)) | quote }}
     {{- if eq .Values.favorite.drink "coffee" }}
     cream: true
     sugar: false
