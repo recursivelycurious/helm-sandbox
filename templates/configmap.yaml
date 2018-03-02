@@ -4,6 +4,20 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   myvalue: "Hello World"
-  drink: {{ .Values.favorite.drink | default (printf "%s-tea" (include "helm-sandbox.fullname" .)) | quote }}
   food: {{required "[ERROR] .Values.favorite.food not specified - add to Values or pass with `--set` " .Values.favorite.food | quote }}
-  {{ if eq .Values.favorite.drink "coffee" }}cream: true{{ end }}
+  {{- if eq .Values.favorite.food "pizza" }}
+  toppings: |-
+    {{- range .Values.pizzaToppings }}
+    - {{ . | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.favorite.drink }}
+  drink: {{ .Values.favorite.drink | default (printf "%s-tea" (include "helm-sandbox.fullname" .)) | quote }}
+    {{- if eq .Values.favorite.drink "coffee" }}
+    cream: true
+    sugar: false
+    {{- else if eq .Values.favorite.drink "tea" }}
+    cream: false
+    sugar: true
+    {{- end }}
+  {{- end }}
