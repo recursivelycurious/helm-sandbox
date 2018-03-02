@@ -11,14 +11,15 @@ data:
     - {{ . | title | quote }}
     {{- end }}
   {{- end }}
-  {{- if .Values.favorite.drink }}
+  {{- $defaultDrink := (printf "%s-tea" (include "helm-sandbox.fullname" .)) }}
   drink: 
-    type: {{ .Values.favorite.drink | default (printf "%s-tea" (include "helm-sandbox.fullname" .)) | quote }}
-    {{- if eq .Values.favorite.drink "coffee" }}
+    type: {{ .Values.favorite.drink.type | default $defaultDrink | quote }}
+    {{- if .Values.favorite.drink.type }}
+      {{- if eq .Values.favorite.drink.type "coffee" }}
     cream: true
     sugar: false
-    {{- else if eq .Values.favorite.drink "tea" }}
+      {{- else if eq .Values.favorite.drink.type "tea" }}
     cream: false
     sugar: true
+      {{- end }}
     {{- end }}
-  {{- end }}
