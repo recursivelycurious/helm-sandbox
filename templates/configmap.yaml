@@ -6,3 +6,4 @@ data:
   myvalue: "Hello World"
   drink: {{ .Values.favorite.drink | default (printf "%s-tea" (include "helm-sandbox.fullname" .)) | quote }}
   food: {{required "[ERROR] .Values.favorite.food not specified - add to Values or pass with `--set` " .Values.favorite.food | quote }}
+  {{ if eq .Values.favorite.drink "coffee" }}cream: true{{ end }}
