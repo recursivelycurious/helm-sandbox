@@ -10,3 +10,8 @@
 {{- end -}}
 {{- end -}}
 {{- end -}}
+{{- define "my_labels" }}
+labels:
+  generator: helm
+  date: {{ now | htmlDate }}
+{{- end }}

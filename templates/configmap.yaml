@@ -2,9 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
+{{- $baseIndent := 2 }}
+{{- include "my_labels" . | indent $baseIndent }}
 data:
   myvalue: "Hello World"
-  {{- $baseIndent := 2 }}
   food: {{required "[ERROR] .Values.favorite.food not specified - add to Values or pass with `--set` " .Values.favorite.food | quote }}
   {{- if eq .Values.favorite.food "pizza" }}
   {{- $nestedIndent := (add $baseIndent 2 ) }}
