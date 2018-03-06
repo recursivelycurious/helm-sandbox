@@ -7,27 +7,29 @@ data:
   {{- $baseIndent := 2 }}
   food: {{required "[ERROR] .Values.favorite.food not specified - add to Values or pass with `--set` " .Values.favorite.food | quote }}
   {{- if eq .Values.favorite.food "pizza" }}
-  baseIndent: {{ $baseIndent }}
   {{- $nestedIndent := (add $baseIndent 2 ) }}
-  nestedIndent: {{ $nestedIndent }}
   toppings: |-
     {{- range .Values.pizzaToppings }}
     - {{ . | title | quote }}
     {{- end }}
+  baseIndent: {{ $baseIndent | quote }}
+  nestedIndent: {{ $nestedIndent | quote }}
   {{- end }}
+  {{- /* note you can use template comments to prevent rendering */}}
   {{- $defaultDrink := (printf "%s-tea" (include "helm-sandbox.fullname" .)) }}
-  drink:
-    # Note that the default drink, if not specified
-    # is set to {{ $defaultDrink }}
-    type: {{ .Values.favorite.drink.type | default $defaultDrink | quote }}
-    {{- if .Values.favorite.drink.type }}
-    {{- with .Values.favorite.drink }}
-      {{- if eq .type "coffee" }}
+  drink: {{ .Values.favorite.drink | default $defaultDrink | quote }}
+  {{- if .Values.favorite.drink }}
+  drinkDoctoring: |-
+  {{- with .Values.favorite }}
+    {{- if eq .drink "coffee" }}
     cream: true
     sugar: false
-      {{- else if eq .type "tea" }}
+    {{- else if eq .drink "tea" }}
     cream: false
     sugar: true
-      {{- end }}
+    {{- else }}
+    cream: false
+    sugar: false
     {{- end }}
-    {{- end }}
+  {{- end }}
+  {{- end }}
