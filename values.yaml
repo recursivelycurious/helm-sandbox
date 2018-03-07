@@ -7,3 +7,39 @@ favorite:
 pizzaToppings:
   - sausage
   - pepperoni
+
+ingress: 
+  - rules:
+    - host: site1.foo.com
+      http:
+      paths:
+        - path: /app1
+          tls: ~
+          backend:
+            serviceName: myService1
+            servicePort: 80
+    - host: site2.foo.com
+      http:
+      paths:
+        - path: /app2
+          tls: ~
+          backend:
+            serviceName: myService2
+            servicePort: 80
+  - rules:
+    - host: site1.bar.com
+      http:
+      paths:
+        - path: /app1
+          tls: ~
+          backend:
+            serviceName: myService1
+            servicePort: 80
+    - host: site2.bar.com
+      http:
+      paths:
+        - path: /app2
+          tls: ~
+          backend:
+            serviceName: myService2
+            servicePort: 80
